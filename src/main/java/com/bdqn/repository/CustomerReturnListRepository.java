@@ -1,0 +1,22 @@
+package com.bdqn.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+
+import com.bdqn.entity.CustomerReturnList;
+
+/**
+ * 客户退货单Repository接口
+ * @author Administrator
+ *
+ */
+public interface CustomerReturnListRepository extends JpaRepository<CustomerReturnList, Integer>,JpaSpecificationExecutor<CustomerReturnList>{
+	
+	/**
+	 * @return
+	 * 获取当前最大客户退货单号
+	 */
+	@Query(value="SELECT MAX(customer_return_number) FROM t_customer_return_list WHERE TO_DAYS(customer_return_date)=TO_DAYS(NOW())",nativeQuery=true)
+	public String getTodayMaxCustomerReturnNumber();
+}
